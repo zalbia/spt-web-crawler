@@ -1,11 +1,21 @@
 package zalbia.spt.web.crawler.service
 
-import io.lemonlabs.uri.Url
 import zalbia.spt.web.crawler.domain.CrawlResult
-import zio.UIO
-
-import java.io.IOException
+import zio._
 
 trait WebCrawlerService {
-  def crawl(urls: List[Url]): UIO[List[Either[IOException, CrawlResult]]]
+
+  /** Attempts to crawl the text content of each URL,
+    *
+    * @param urls
+    * @return
+    */
+  def crawl(urls: List[String]): UIO[CrawlResult]
+}
+
+object WebCrawlerService {
+
+  /** Accessor method for `WebCrawlerService#crawl`. */
+  def crawl(urls: List[String]): URIO[WebCrawlerService, CrawlResult] =
+    ZIO.serviceWithZIO(_.crawl(urls))
 }

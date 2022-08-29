@@ -20,8 +20,7 @@ lazy val root = (project in file("."))
       "dev.zio"      %% "zio-json"     % Versions.zioJson,
       "dev.zio"      %% "zio-test"     % Versions.zio % Test,
       "dev.zio"      %% "zio-test-sbt" % Versions.zio % Test,
-      "io.d11"       %% "zhttp"        % Versions.zioHttp,
-      "io.lemonlabs" %% "scala-uri"    % Versions.scalaUri
+      "io.d11"       %% "zhttp"        % Versions.zioHttp
     ),
     testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework")
   )

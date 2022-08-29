@@ -1,15 +1,18 @@
 package zalbia.spt.web.crawler.domain
 
-import io.lemonlabs.uri.Url
+import zio.json.{DeriveJsonEncoder, JsonEncoder}
 
-/** Text representation of the result of crawling a URL
+/** Representation
   *
-  * @param url
-  *   valid URL
-  * @param data
-  *   text representation of a URL's crawled content
+  * @param error
+  *   A list of strings
+  * @param result
   */
 final case class CrawlResult(
-    url: Url,
-    data: String
+    error: List[CrawlError],
+    result: List[CrawlData]
 )
+
+object CrawlResult {
+  implicit val encoder: JsonEncoder[CrawlResult] = DeriveJsonEncoder.gen
+}

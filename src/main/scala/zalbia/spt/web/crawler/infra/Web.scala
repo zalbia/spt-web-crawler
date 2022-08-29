@@ -1,9 +1,6 @@
-package zalbia.spt.web.crawler.service
+package zalbia.spt.web.crawler.infra
 
-import io.lemonlabs.uri.Url
-import zio.IO
-
-import java.io.IOException
+import zio.Task
 
 trait Web {
 
@@ -14,5 +11,5 @@ trait Web {
     * @return
     *   The web content of the URL as a string
     */
-  def getUrl(url: Url): IO[IOException, String]
+  def getUrl(url: String): Task[String]
 }
