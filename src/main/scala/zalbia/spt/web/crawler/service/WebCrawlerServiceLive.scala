@@ -16,9 +16,16 @@ final class WebCrawlerServiceLive(web: Web) extends WebCrawlerService {
           )
       }
       .map { list =>
-        val errors  = list.collect { case e @ Left(_) => e }
-        val results = list.collect { case res @ Right(_) => res }
-        CrawlResult(errors.map(_.value), results.map(_.value))
+        // empty errors or results are flattened to None
+        val errors  = list.collect { case e @ Left(_) => e } match {
+          case Nil => None
+          case l   => Some(l.map(_.value))
+        }
+        val results = list.collect { case res @ Right(_) => res } match {
+          case Nil => None
+          case l   => Some(l.map(_.value))
+        }
+        CrawlResult(errors, results)
       }
 }
 
