@@ -4,6 +4,7 @@ ThisBuild / organization     := "zalbia.spt.web.crawler"
 ThisBuild / organizationName := "zalbia"
 
 val Versions = new {
+  val scalaUri  = "4.0.2"
   val zio       = "2.0.1"
   val zioConfig = "3.0.2"
   val zioHttp   = "2.0.0-RC10"
@@ -14,12 +15,13 @@ lazy val root = (project in file("."))
   .settings(
     name := "spt-web-crawler",
     libraryDependencies ++= Seq(
-      "dev.zio" %% "zio"          % Versions.zio,
-      "dev.zio" %% "zio-config"   % Versions.zioConfig,
-      "dev.zio" %% "zio-json"     % Versions.zioJson,
-      "dev.zio" %% "zio-test"     % Versions.zio % Test,
-      "dev.zio" %% "zio-test-sbt" % Versions.zio % Test,
-      "io.d11"  %% "zhttp"        % Versions.zioHttp
+      "dev.zio"      %% "zio"          % Versions.zio,
+      "dev.zio"      %% "zio-config"   % Versions.zioConfig,
+      "dev.zio"      %% "zio-json"     % Versions.zioJson,
+      "dev.zio"      %% "zio-test"     % Versions.zio % Test,
+      "dev.zio"      %% "zio-test-sbt" % Versions.zio % Test,
+      "io.d11"       %% "zhttp"        % Versions.zioHttp,
+      "io.lemonlabs" %% "scala-uri"    % Versions.scalaUri
     ),
     testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework")
   )
