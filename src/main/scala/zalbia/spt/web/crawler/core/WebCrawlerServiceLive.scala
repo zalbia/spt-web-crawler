@@ -1,7 +1,6 @@
-package zalbia.spt.web.crawler.service
+package zalbia.spt.web.crawler.core
 
-import zalbia.spt.web.crawler.domain.{CrawlData, CrawlError, CrawlResult}
-import zalbia.spt.web.crawler.infra.Web
+import zalbia.spt.web.crawler.core
 import zio._
 
 final class WebCrawlerServiceLive(web: Web) extends WebCrawlerService {
@@ -25,7 +24,7 @@ final class WebCrawlerServiceLive(web: Web) extends WebCrawlerService {
           case Nil => None
           case l   => Some(l.map(_.value))
         }
-        CrawlResult(errors, results)
+        core.CrawlResult(errors, results)
       }
 }
 

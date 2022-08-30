@@ -1,6 +1,5 @@
-package zalbia.spt.web.crawler.service
+package zalbia.spt.web.crawler.core
 
-import zalbia.spt.web.crawler.domain.CrawlResult
 import zio._
 
 trait WebCrawlerService {

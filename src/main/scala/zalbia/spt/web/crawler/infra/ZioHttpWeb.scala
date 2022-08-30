@@ -1,4 +1,6 @@
 package zalbia.spt.web.crawler.infra
+
+import zalbia.spt.web.crawler.core.Web
 import zhttp.service.{ChannelFactory, Client, EventLoopGroup}
 import zio._
 

@@ -1,4 +1,4 @@
-package zalbia.spt.web.crawler.infra
+package zalbia.spt.web.crawler.core
 
 import zio.Task
 

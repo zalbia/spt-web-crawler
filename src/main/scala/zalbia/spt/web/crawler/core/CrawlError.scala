@@ -1,8 +1,8 @@
-package zalbia.spt.web.crawler.domain
+package zalbia.spt.web.crawler.core
 
 import zio.json.{DeriveJsonEncoder, JsonEncoder}
 
-/** Represents an error encountered while crawling a URL.
+/** An error encountered while crawling a URL.
   *
   * @param url
   *   failing URL

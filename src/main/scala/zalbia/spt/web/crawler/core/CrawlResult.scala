@@ -1,8 +1,8 @@
-package zalbia.spt.web.crawler.domain
+package zalbia.spt.web.crawler.core
 
 import zio.json.{DeriveJsonEncoder, JsonEncoder}
 
-/** Represents the result of crawling urls, including both errors and data */
+/** The result of crawling urls, including both errors and data */
 final case class CrawlResult(
     error: Option[List[CrawlError]],
     result: Option[List[CrawlData]]

@@ -1,4 +1,4 @@
-package zalbia.spt.web.crawler.domain
+package zalbia.spt.web.crawler.core
 
 import zio.json.{DeriveJsonEncoder, JsonEncoder}
 

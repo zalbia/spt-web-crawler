@@ -1,6 +1,6 @@
 import zalbia.spt.web.crawler.api.HttpRoutes
+import zalbia.spt.web.crawler.core.WebCrawlerServiceLive
 import zalbia.spt.web.crawler.infra.ZioHttpWeb
-import zalbia.spt.web.crawler.service.WebCrawlerServiceLive
 import zhttp.service._
 import zio._
 

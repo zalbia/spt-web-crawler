@@ -1,6 +1,6 @@
 package zalbia.spt.web.crawler.api
 
-import zalbia.spt.web.crawler.service.WebCrawlerService
+import zalbia.spt.web.crawler.core.WebCrawlerService
 import zhttp.http._
 import zio.ZIO
 import zio.json._
