@@ -11,7 +11,7 @@ import zio.json.{DeriveJsonEncoder, JsonEncoder}
   */
 final case class CrawlError(
     url: String,
-    error: String
+    error: CrawlErrorMessage
 )
 
 object CrawlError {

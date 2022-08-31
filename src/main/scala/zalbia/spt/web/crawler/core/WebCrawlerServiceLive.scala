@@ -10,7 +10,7 @@ final class WebCrawlerServiceLive(web: Web) extends WebCrawlerService {
         web
           .getUrl(url)
           .fold(
-            e => Left(CrawlError(url, e.getMessage)),
+            errorMessage => Left(CrawlError(url, errorMessage)),
             data => Right(CrawlData(url, data))
           )
       }
