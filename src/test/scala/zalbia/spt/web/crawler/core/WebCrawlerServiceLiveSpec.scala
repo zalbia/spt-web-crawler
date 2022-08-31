@@ -8,10 +8,12 @@ import zio.json._
 import zio.test.Assertion._
 import zio.test.TestAspect._
 import zio.test._
+import zio.{Fiber, URIO}
 
 object WebCrawlerServiceLiveSpec extends ZIOSpecDefault {
 
-  val serverFiber = Server.start(8080, HttpRoutes.app).fork
+  val serverFiber: URIO[WebCrawlerService, Fiber.Runtime[Throwable, Nothing]] =
+    Server.start(8080, HttpRoutes.app).fork
 
   override def spec =
     suite("WebCrawlerServiceLive")(
@@ -77,8 +79,9 @@ object WebCrawlerServiceLiveSpec extends ZIOSpecDefault {
               response <- Client.request(
                             url = webCrawlerEndpointUrl,
                             method = Method.POST,
-                            content =
-                              HttpData.fromString(CrawlParams(List("https://google.com", "https://github.com")).toJson)
+                            content = HttpData.fromString(
+                              CrawlParams(List("https://google.com", "https://github.com")).toJson
+                            )
                           )
               data     <- response.bodyAsString
             } yield assertTrue(
