@@ -15,7 +15,7 @@ object HttpRoutes {
                          .map(_.fromJson[CrawlParams].left.map(new RuntimeException(_)))
                          .absolve
                          .tapError((_: Throwable) => ZIO.logInfo("Request body could not be parsed"))
-        crawlResult <- WebCrawlerService.crawl(crawlParams.urls)
+        crawlResult <- WebCrawlerService.crawl(crawlParams.urls).map(CrawlResult.fromList)
       } yield crawlResult).either.map {
         case Left(_)            => Response.status(Status.BadRequest)
         case Right(crawlResult) => Response.json(crawlResult.toJson)
