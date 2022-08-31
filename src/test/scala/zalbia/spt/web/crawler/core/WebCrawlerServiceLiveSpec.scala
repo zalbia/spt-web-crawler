@@ -1,9 +1,18 @@
 package zalbia.spt.web.crawler.core
 
+import zalbia.spt.web.crawler.api.{CrawlParams, CrawlResult, HttpRoutes}
+import zalbia.spt.web.crawler.infra.ZioHttpWeb
+import zhttp.http.{HttpData, Method}
+import zhttp.service._
+import zio.json._
 import zio.test.Assertion._
+import zio.test.TestAspect._
 import zio.test._
 
 object WebCrawlerServiceLiveSpec extends ZIOSpecDefault {
+
+  val serverFiber = Server.start(8080, HttpRoutes.app).fork
+
   override def spec =
     suite("WebCrawlerServiceLive")(
       suite("unit tests")(
@@ -60,6 +69,40 @@ object WebCrawlerServiceLiveSpec extends ZIOSpecDefault {
 
           assertZIO(service.crawl(List("https://foo.com", "https://bar.com")))(equalTo(expected))
         }
+      ), {
+        val webCrawlerEndpointUrl = "http://localhost:8080/api/crawl"
+        suite("integration tests")(
+          test("crawling google and github returns data in JSON") {
+            for {
+              response <- Client.request(
+                            url = webCrawlerEndpointUrl,
+                            method = Method.POST,
+                            content =
+                              HttpData.fromString(CrawlParams(List("https://google.com", "https://github.com")).toJson)
+                          )
+              data     <- response.bodyAsString
+            } yield assertTrue(
+              data.fromJson[CrawlResult].exists(result => result.result.isDefined && result.error.isEmpty)
+            )
+          },
+          test("crawling an invalid URL yields an error") {
+            for {
+              response <- Client.request(
+                            url = webCrawlerEndpointUrl,
+                            method = Method.POST,
+                            content = HttpData.fromString(CrawlParams(List("invalid url")).toJson)
+                          )
+              data     <- response.bodyAsString
+            } yield assertTrue(
+              data.fromJson[CrawlResult].exists(result => result.error.exists(_.nonEmpty) && result.result.isEmpty)
+            )
+          }
+        ) @@ sequential @@ beforeAll(serverFiber) @@ afterAll(serverFiber.map(_.interrupt))
+      }.provide(
+        ChannelFactory.auto,
+        EventLoopGroup.auto(),
+        ZioHttpWeb.layer,
+        WebCrawlerServiceLive.layer
       )
     )
 }

@@ -1,6 +1,6 @@
 package zalbia.spt.web.crawler.core
 
-import zio.json.{DeriveJsonEncoder, JsonEncoder}
+import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
 
 /** Text representation of the data of crawling a URL */
 final case class CrawlData(
@@ -9,5 +9,6 @@ final case class CrawlData(
 )
 
 object CrawlData {
+  implicit val decoder: JsonDecoder[CrawlData] = DeriveJsonDecoder.gen
   implicit val encoder: JsonEncoder[CrawlData] = DeriveJsonEncoder.gen
 }

@@ -1,7 +1,7 @@
 package zalbia.spt.web.crawler.api
 
 import zalbia.spt.web.crawler.core.{CrawlData, CrawlError}
-import zio.json.{DeriveJsonEncoder, JsonEncoder}
+import zio.json.{DeriveJsonDecoder, DeriveJsonEncoder, JsonDecoder, JsonEncoder}
 
 /** The result of crawling urls, including both errors and data */
 final case class CrawlResult(
@@ -10,6 +10,7 @@ final case class CrawlResult(
 )
 
 object CrawlResult {
+  implicit val decoder: JsonDecoder[CrawlResult] = DeriveJsonDecoder.gen
   implicit val encoder: JsonEncoder[CrawlResult] = DeriveJsonEncoder.gen
 
   def fromList(list: List[Either[CrawlError, CrawlData]]): CrawlResult = {
